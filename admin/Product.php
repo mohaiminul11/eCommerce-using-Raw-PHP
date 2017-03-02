@@ -1,11 +1,11 @@
-<?php 
- if(!isset($_SESSION)) 
-    { 
-        session_start(); 
+<?php
+ if(!isset($_SESSION))
+    {
+        session_start();
     }
 if($_SESSION['role']!="admin"){
         header("Location:../login.php");
-    } 
+    }
 require_once'../core/init.php';
 include 'includes/header.php';
 include 'includes/navigation.php';
@@ -14,23 +14,10 @@ $result=mysql_query($query);
 
 //Edit Brand
 ?>
-        <div class="col-md-2">
-        	
-        	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><?php
-            if(isset($_SESSION["username"])){
-                echo $_SESSION["username"];
-            }else{
-                echo "";
-            }
-            ?>
-            <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                 <li><a href="../login.php?logout=1">Logout</a></li>
-                 
-                </ul>
-        	
-        </div>
-        
+        <?php
+        include 'includes/leftSideBar.php';
+         ?>
+
         <!--EDIT AND DELETE-->
         <div class="col-md-8">
             <h4>Add Product</h4>
@@ -39,125 +26,125 @@ $result=mysql_query($query);
                 <tbody>
                     <tr>
                         <td>
-                            <label>Title:</label> 
+                            <label>Title:</label>
                         </td>
                         <td>
                             <input type="text" name="title" />
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>Price:</label> 
+                            <label>Price:</label>
                         </td>
                         <td>
                             <input type="text" name="price" />
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>Category:</label> 
+                            <label>Category:</label>
                         </td>
                         <td>
                             <select name="category">
                                 <?php
                                 $get_cats="select category , id from categories ";
-        
+
                                 $run_cats=mysql_query($get_cats);
-        
+
                                 while($row_cats=mysql_fetch_array($run_cats)){
-            
+
                                 $cat_id=$row_cats['id'];
                                 $cat_title=$row_cats['category'];
-            
-            
+
+
                                 echo"<option value='$cat_id'>$cat_title</option>";
                                 }
                                 ?>
-                        
+
                             </select>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>Brand:</label> 
+                            <label>Brand:</label>
                         </td>
                         <td>
                             <select name="brand">
                                 <?php
                                 $get_cats="select brand , id from brand ";
-        
+
                                 $run_brand=mysql_query($get_cats);
-        
+
                                 while($row_cats=mysql_fetch_array($run_brand)){
-            
+
                                 $cat_id=$row_cats['id'];
                                 $cat_title=$row_cats['brand'];
-            
-            
+
+
                                 echo"<option value='$cat_id'>$cat_title</option>";
                                 }
                                 ?>
-                        
+
                             </select>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>Description:</label> 
+                            <label>Description:</label>
                         </td>
                         <td>
                             <input type="text" name="description" />
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>featured:</label> 
+                            <label>featured:</label>
                         </td>
                         <td>
                             <select name="featured">
                                 <option value='1'>
                                     yes
-                                </option> 
+                                </option>
                                 <option value='0'>
                                     no
-                                </option>  
+                                </option>
                             </select>
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>quantity:</label> 
+                            <label>quantity:</label>
                         </td>
                         <td>
                             <input type="text" name="quantity" />
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
-                            <label>Image:</label> 
+                            <label>Image:</label>
                         </td>
                         <td>
                             <input type="file" name="file" />
                         </td>
                     </tr>
-                        
+
                 </tbody>
             </table>
             <input type="submit" name="submit" class="btn btn-success" value="Add product" />
         </form>
-        
-        <?php 
+
+        <?php
            if(isset($_POST['submit'])){
                 $name=$_FILES['file']['name'];
                 $tempname=$_FILES['file']['tmp_name'];
                 $location='../images/';
                 move_uploaded_file($tempname, $location.$name);
-                
+
                 $sql="INSERT into products VALUES('','".$_POST['title']."','".$_POST['price']."','".$_POST['brand']."','".$_POST['category']."','"."images/".$name."','".$_POST['description']."','".$_POST['featured']."','".$_POST['quantity']."')";
                 $result=mysql_query($sql);
                 if($result>0){
@@ -169,9 +156,9 @@ $result=mysql_query($query);
         ?>
     </div>
     <div class="col-md-2"></div>
-    
+
 </div>
 
- <?php 
+ <?php
  include 'includes/footer.php';
  ?>

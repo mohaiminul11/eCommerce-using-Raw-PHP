@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-if(!isset($_SESSION)) 
-    { 
-        session_start(); 
+if(!isset($_SESSION))
+    {
+        session_start();
     }
 if($_SESSION['role']!="admin"){
         header("Location:../login.php");
-    } 
+    }
 require_once'../core/init.php';
 include 'includes/header.php';
 include 'includes/navigation.php';
@@ -21,7 +21,7 @@ if(isset($_GET['edit'])&&!empty($_GET['edit'])){
     $r=mysql_query($sql)or die(mysql_error());
     $row=mysql_fetch_array($r);
     if($r>0){
-       //header("Location: Brands.php"); 
+       //header("Location: Brands.php");
     }
     else{
         echo "Failed!";
@@ -34,7 +34,7 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
     $sql="DELETE FROM brand where id='".$_GET['delete']."'";
     $r=mysql_query($sql)or die(mysql_error());
     if($r>0){
-       header("Location: Brands.php"); 
+       header("Location: Brands.php");
     }
     else{
         echo "Failed!";
@@ -43,12 +43,12 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
 
 ?>
 
-<script> 
+<script>
     /*
     function emptyCheck(){
         v=$("#brand").val();
         alert("valeu:"+v);
-        
+
         if($("#brand").val().length==0){
             alert('Empty Field!');
             return false;
@@ -58,16 +58,16 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
             var test="";
             alert(test);
             }
-            
+
         return true;
-        
-        
+
+
     }
-    function myJavascriptFunction() { 
+    function myJavascriptFunction() {
               var value = v;
-              window.location.href = "myphpfile.php?name=" + javascriptVariable; 
+              window.location.href = "myphpfile.php?name=" + javascriptVariable;
             }
-    
+
     function loadDoc() {
               alert(v);
               var xhttp = new XMLHttpRequest();
@@ -78,7 +78,7 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
                  alert(vc);
                  test=vc;
                  alert(test);
-                 
+
                 }
               };
               xhttp.open("GET", "BrandAvailability.php?val="+v, true);
@@ -89,30 +89,14 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
 </script>
 
 <div class="container">
-    <div class="col-md-2">
-    	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><?php
-            if(isset($_SESSION["username"])){
-                echo $_SESSION["username"];
-            }else{
-                echo "";
-            }
-            ?>
-            <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                 <li><a href="../login.php?logout=1">Logout</a></li>
-                 
-                </ul>
-        	
-    	
-    	
-    </div>
+    <?php include 'includes/leftSideBar.php'; ?>
     <div class="col-md-8">
         <h2 class="text-center">Brands</h2><hr />
-        
+
         <!--ADD/EDIT BRAND-->
         <form action="Brands.php<?=(isset($_GET['edit']))?'?edit='.$edit_id:''?>" method="post" class="form-inline">
           <div class="form-group">
-              <?php 
+              <?php
                 $brand_value="";
                 if(isset($_GET['edit'])){
                     $brand_value=$row['brand'];
@@ -126,7 +110,7 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
             }else{
                 echo "Add A";
             }?> Brand</label>
-            
+
             <input type="text" class="form-control" name="brand" id="brand" value="<?=$brand_value;?>">
           </div>
           <?php if(isset($_GET['edit'])): ?>
@@ -134,8 +118,8 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
           <?php endif; ?>
           <input type="submit" name="submit" value="<?=(isset($_GET['edit']))?'Edit':'Add '?> Brand" class="btn btn-large btn-success">
         </form><!--End of Form-->
-        
-        
+
+
         <!--Show Error Mesage-->
         <label><?php if(isset($_POST['submit'])){
             if($_POST['brand']==""){
@@ -151,7 +135,7 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
                     echo "The Brand name already Exists!";
                 }else{
                     $sql="INSERT into brand VALUES('','".$_POST['brand']."')";
-                    
+
                     if(isset($_GET['edit'])){
                         $sql="UPDATE brand SET brand='".$_POST['brand']."' WHERE id='".$edit_id."'";
                     }
@@ -161,8 +145,8 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
                     }
                 }
             }
-            
-            
+
+
         } ?></label>
         <hr />
         <!--EDIT AND DELETE-->
@@ -182,9 +166,9 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
         </table>
     </div>
     <div class="col-md-2"></div>
-    
+
 </div>
 
- <?php 
+ <?php
  include 'includes/footer.php';
  ?>

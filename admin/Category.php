@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-if(!isset($_SESSION)) 
-    { 
-        session_start(); 
+if(!isset($_SESSION))
+    {
+        session_start();
     }
 if($_SESSION['role']!="admin"){
         header("Location:../login.php");
-    } 
+    }
 require_once'../core/init.php';
 include 'includes/header.php';
 include 'includes/navigation.php';
@@ -21,7 +21,7 @@ if(isset($_GET['edit'])&&!empty($_GET['edit'])){
     $r=mysql_query($sql)or die(mysql_error());
     $row=mysql_fetch_array($r);
     if($r>0){
-       //header("Location: Brands.php"); 
+       //header("Location: Brands.php");
     }
     else{
         echo "Failed!";
@@ -34,7 +34,7 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
     $sql="DELETE FROM categories where id='".$_GET['delete']."'";
     $r=mysql_query($sql)or die(mysql_error());
     if($r>0){
-       header("Location: Category.php"); 
+       header("Location: Category.php");
     }
     else{
         echo "Failed!";
@@ -45,59 +45,48 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
 
 
 <div class="container">
-    <div class="col-md-2">
-    	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><?php
-            if(isset($_SESSION["username"])){
-                echo $_SESSION["username"];
-            }else{
-                echo "";
-            }
-            ?>
-            <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                 <li><a href="../login.php?logout=1">Logout</a></li>
-                 
-                </ul>
-    </div>
+    <?php
+    include 'includes/leftSideBar.php';
+     ?>
     <div class="col-md-8">
         <h2 class="text-center">Categories</h2><hr />
 		<div>
-		
+
 		</div>
         <!--parent id = product_cat && Categoryid=$edit_id-->
         <!--ADD/EDIT Category Form-->
         <form action="Category.php<?=(isset($_GET['edit']))?'?edit2='.$edit_id:''?>" method="post" class="form-inline">
 			<div class="form-group">
-				
+
 				<label>Parent Category:</label>
-					
+
 					<select name="product_cat" required>
 						<option>Select a Catagory</option>
 						<?php
 							$get_cats="select category , id from categories ";
-		
+
 								$run_cats=mysql_query($get_cats);
-		
+
 								while($row_cats=mysql_fetch_array($run_cats)){
-			
+
 								$cat_id=$row_cats['id'];
 								$cat_title=$row_cats['category'];
-			
-			
+
+
 								echo"<option value='$cat_id'>$cat_title</option>";
-							
+
 		}
-						
+
 						?>
 
 				</select>
-				
+
 			</div></br>
-		
+
           <div class="form-group">
-              
+
             <label for="Categories"> Categories: </label>
-            
+
             <input type="text" class="form-control" name="category" id="category" value="<?php
                 if(isset($_GET['edit'])){
                     echo $row['category'];
@@ -113,17 +102,17 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
           <?php endif; ?>
           <input type="submit" name="submit" value="<?=(isset($_GET['edit']))?'Edit':'Add '?> Categories" class="btn btn-large btn-success">
         </form><!--End of Form-->
-        
-        
+
+
         <!--parent id = product_cat && (for editing)Categoryid=$edit_id-->
         <!--Edit/Add/Error-->
-        <label><?php 
+        <label><?php
         if(isset($_POST['submit'])){
-            
+
             if($_POST['product_cat']=="Select a Catagory"){
                 $_POST['product_cat']=0;
             }
-            
+
             if($_POST['category']==""){
                 echo "Field is empty!";
             }else{
@@ -134,12 +123,12 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
                     echo "The Category name already Exists!";
                 }else{
                     //echo $_POST['product_cat'];
-                    
-                    
-                        
+
+
+
                     $sql="UPDATE categories SET category='".$_POST['category']."', parent='".$_POST['product_cat']."' WHERE id='".$_GET['edit2']."'";
-                        
-                    
+
+
                     if(!isset($_GET['edit2'])){
                         $sql="INSERT into categories VALUES('','".$_POST['category']."','".$_POST['product_cat']."')";
                     }
@@ -149,8 +138,8 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
                     }
                 }
             }
-            
-            
+
+
         } ?></label>
         <hr />
         <!--EDIT AND DELETE BUTTON CLICK AND SHOW ALL VALUES-->
@@ -167,30 +156,30 @@ if(isset($_GET['delete'])&&!empty($_GET['delete'])){
 						<?php
 						$queryy ="SELECT category FROM categories where id = '".$row['parent']."' ";
 						$resultt=mysql_query($queryy) or die(mysql_error());
-			
+
 					echo "\x20\x20\x20";
-						
+
                      while($roww=mysql_fetch_array($resultt))
                      {
                     ?>
 
 						<?php
-						
+
 					echo $roww['category'];
 						 }?></td>
-						
+
                         <td><a href="Category.php?delete=<?=$row['id'];?>" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
-						
-						
+
+
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
     <div class="col-md-2"></div>
-    
+
 </div>
 
- <?php 
+ <?php
  include 'includes/footer.php';
  ?>

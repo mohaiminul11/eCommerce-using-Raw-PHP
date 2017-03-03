@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2016 at 04:36 PM
+-- Generation Time: Mar 03, 2017 at 04:26 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accounts` (
-  `Id` int(100) NOT NULL,
+  `id` int(100) NOT NULL,
   `username` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -42,9 +42,11 @@ CREATE TABLE `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`Id`, `username`, `name`, `password`, `address`, `email`, `dob`, `gender`, `role`) VALUES
+INSERT INTO `accounts` (`id`, `username`, `name`, `password`, `address`, `email`, `dob`, `gender`, `role`) VALUES
 (57, 'admin', 'mehedi', 'admin', 'nikunja-2', 'mehedi@gmail.com', '2016-10-10', 'Male', 'admin'),
-(58, 'sumon', 'sumon', 'aA12', 'adsf', 'a@dsf.com', '0000-00-00', 'male', 'user');
+(58, 'sumon', 'sumon', 'aaa', 'adsf', 'a@dsf.com', '0000-00-00', 'male', 'user'),
+(59, 'asadf', 'adfdasf', 'aA12f', 'asdf', 'a@b.com', '0000-00-00', 'male', 'user'),
+(60, 'sadfsd', 'asdf', '123456aA', 'asdf', 'a@b.com', '0000-00-00', 'male', 'user');
 
 -- --------------------------------------------------------
 
@@ -120,35 +122,13 @@ CREATE TABLE `orderdetails` (
 --
 
 INSERT INTO `orderdetails` (`id`, `orderId`, `productId`, `quantity`, `date`) VALUES
-(5, 42, 1, 7, '2016-05-07'),
-(6, 43, 1, 3, '2016-05-07'),
-(7, 44, 2, 9, '2016-05-07'),
-(8, 45, 1, 11, '2016-05-07'),
-(9, 45, 2, 1, '2016-05-07'),
-(10, 46, 2, 8, '2016-05-07'),
-(11, 47, 2, 2, '2016-05-07'),
-(12, 48, 1, 4, '2016-05-08'),
-(13, 51, 1, 4, '2016-05-08'),
-(14, 52, 1, 4, '2016-05-08'),
-(15, 52, 2, 3, '2016-05-08'),
-(16, 52, 3, 4, '2016-05-08'),
-(17, 53, 2, 3, '2016-05-08'),
-(18, 54, 1, 4, '2016-05-08'),
-(19, 55, 4, 2, '2016-05-08'),
-(20, 55, 5, 1, '2016-05-08'),
-(21, 56, 1, 4, '2016-05-08'),
-(22, 56, 2, 2, '2016-05-08'),
-(23, 56, 4, 1, '2016-05-08'),
-(24, 56, 5, 2, '2016-05-08'),
-(25, 57, 2, 3, '2016-05-08'),
-(26, 58, 4, 2, '2016-05-08'),
-(27, 58, 5, 2, '2016-05-08'),
-(28, 58, 1, 1, '2016-05-08'),
-(29, 59, 1, 1, '2016-05-08'),
-(30, 60, 2, 1, '2016-05-08'),
-(31, 61, 4, 2, '2016-05-08'),
-(32, 61, 5, 1, '2016-05-08'),
-(33, 62, 4, 1, '2016-05-08');
+(35, 64, 1, 1, '2017-02-27'),
+(36, 65, 1, 2, '2017-02-27'),
+(37, 65, 2, 2, '2017-02-27'),
+(38, 65, 4, 2, '2017-02-27'),
+(39, 65, 5, 2, '2017-02-27'),
+(40, 65, 6, 22, '2017-02-27'),
+(41, 66, 6, 2, '2017-02-27');
 
 -- --------------------------------------------------------
 
@@ -160,35 +140,19 @@ CREATE TABLE `orders` (
   `orderId` int(11) NOT NULL,
   `totalAmount` int(11) NOT NULL,
   `date` date NOT NULL,
-  `customerid` int(11) NOT NULL
+  `customerid` int(11) NOT NULL,
+  `delivered` tinyint(4) NOT NULL DEFAULT '0',
+  `sent` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderId`, `totalAmount`, `date`, `customerid`) VALUES
-(42, 217, '2016-05-07', 1),
-(43, 93, '2016-05-07', 1),
-(44, 180, '2016-05-07', 1),
-(45, 361, '2016-05-07', 1),
-(46, 0, '2016-05-07', 1),
-(47, 40, '2016-05-07', 1),
-(48, 124, '2016-05-08', 0),
-(49, 0, '2016-05-08', 58),
-(50, 0, '2016-05-08', 58),
-(51, 124, '2016-05-08', 58),
-(52, 1556, '2016-05-08', 58),
-(53, 60, '2016-05-08', 58),
-(54, 124, '2016-05-08', 58),
-(55, 70, '2016-05-08', 0),
-(56, 256, '2016-05-08', 0),
-(57, 60, '2016-05-08', 0),
-(58, 139, '2016-05-08', 0),
-(59, 31, '2016-05-08', 0),
-(60, 20, '2016-05-08', 0),
-(61, 70, '2016-05-08', 0),
-(62, 16, '2016-05-08', 0);
+INSERT INTO `orders` (`orderId`, `totalAmount`, `date`, `customerid`, `delivered`, `sent`) VALUES
+(64, 31, '2017-02-27', 58, 0, 0),
+(65, 10110, '2017-02-27', 58, 0, 0),
+(66, 900, '2017-02-27', 58, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -213,11 +177,25 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `price`, `brand`, `categories`, `image`, `description`, `featured`, `quantity`) VALUES
-(1, 'Levi''s Jeans', '30.99', 1, '6', 'images/products/men4.png', 'These are amazing. They are super confy and sexy! Buy them and enjoy!', 1, 7),
-(2, 'Cool Shirt', '19.99', 1, '5', 'images/products/men1.png', 'A cool Shirt you must try on. It would make you look wonderful.', 1, 5),
-(4, 'T-Shirts', '16.00', 1, '1', 'images/ra,unisex_tshirt,x1350,dd2121 8219e99865,front-c,30,60,940,730-bg,f8f8f8.jpg', 'Plain colour t-shirts are 100% Cotton, Heather Grey is 90% Cotton/10% Polyester, Charcoal Heather is 52% Cotton/48% Polyester', 1, 3),
-(5, 'Formal Shirt', '38.00', 2, '1', 'images/Peter-England-Blue-Printed-Slim-Fit-Formal-Shirt-3526-0003291-1-pdp_slider_l.jpg', 'Fashioned using the ultimate material for comfort- cotton, this formal shirt will keep you at ease.', 1, 3),
-(6, 'Shirt', '450.00', 2, '9', 'images/girls4.png', 'good shirt', 1, 45);
+(1, 'Levi''s Jeans', '30.99', 1, '6', 'images/products/men4.png', 'These are amazing. They are super confy and sexy! Buy them and enjoy!', 1, 50),
+(2, 'Cool Shirt', '19.99', 1, '5', 'images/products/men1.png', 'A cool Shirt you must try on. It would make you look wonderful.', 1, 50),
+(4, 'T-Shirts', '16.00', 1, '1', 'images/ra,unisex_tshirt,x1350,dd2121 8219e99865,front-c,30,60,940,730-bg,f8f8f8.jpg', 'Plain colour t-shirts are 100% Cotton, Heather Grey is 90% Cotton/10% Polyester, Charcoal Heather is 52% Cotton/48% Polyester', 1, 50),
+(5, 'Formal Shirt', '38.00', 2, '1', 'images/Peter-England-Blue-Printed-Slim-Fit-Formal-Shirt-3526-0003291-1-pdp_slider_l.jpg', 'Fashioned using the ultimate material for comfort- cotton, this formal shirt will keep you at ease.', 1, 50),
+(6, 'Shirt', '450.00', 2, '9', 'images/girls4.png', 'good shirt', 1, 50);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_onhold`
+--
+
+CREATE TABLE `products_onhold` (
+  `id` int(11) NOT NULL,
+  `productid` int(11) NOT NULL,
+  `sessionid` varchar(255) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -227,7 +205,7 @@ INSERT INTO `products` (`id`, `title`, `price`, `brand`, `categories`, `image`, 
 -- Indexes for table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `brand`
@@ -260,6 +238,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products_onhold`
+--
+ALTER TABLE `products_onhold`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -267,7 +251,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `brand`
 --
@@ -282,17 +266,22 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `products_onhold`
+--
+ALTER TABLE `products_onhold`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
